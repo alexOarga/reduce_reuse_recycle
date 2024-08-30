@@ -36,7 +36,7 @@ class AnnealedMALASampler:
       log_alpha = e_new-e_old +log_x_given_xhat - log_xhat_given_x 
       
       # Acceptance Ratio
-      acceptance_mask = torch.log(torch.rand(1)) < log_alpha.detach():
+      acceptance_mask = torch.log(torch.rand(1)) < log_alpha.detach()
       x[acceptance_mask] = x_proposal[acceptance_mask]
       e_old[acceptance_mask] = e_new[acceptance_mask]
       grad[acceptance_mask] = grad_new[acceptance_mask]
