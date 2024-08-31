@@ -134,12 +134,14 @@ class AnnealedCHASampler:
       alpha = torch.min(torch.tensor(1.0),torch.exp(logp_accept))
 
       u = torch.rand(1)
-      if u <=alpha:  
-        x = x_new
-        v = v_new
-      else:
-        x = x_old
-        v = v_old
+      update_mask = u <= alpha
+      not_update_mask = torch.logical_not(update_mask)
+
+      x[update_mask] = x_new[update_mask]
+      v[update_mask] = v_new[update_mask]
+
+      x[not_update_mask] = x_old[not_update_mask]
+      v[not_update_mask] = v_old[not_update_mask]
     
       # alpha = torch.exp(logp_accept)
       # mask = (torch.rand(x.shape[0]).cuda() < alpha).float().unsqueeze(1).unsqueeze(2).unsqueeze(3)
