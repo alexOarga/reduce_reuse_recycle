@@ -134,7 +134,7 @@ class AnnealedCHASampler:
       alpha = torch.min(torch.tensor(1.0),torch.exp(logp_accept))
 
       u = torch.rand(1)
-      if u <=alpha.cpu():  
+      if u <=alpha:  
         x = x_new
         v = v_new
       else:
