@@ -61,10 +61,12 @@ def get_named_beta_schedule(schedule_name, num_diffusion_timesteps):
         # Linear schedule from Ho et al, extended to work for any number of
         # diffusion steps.
         scale = 1000 / num_diffusion_timesteps
+        beta_start = scale * 0.0001 if num_diffusion_timesteps > 20 else 0.0001
+        beta_end   = scale * 0.02   if num_diffusion_timesteps > 20 else 0.02
         return get_beta_schedule(
             "linear",
-            beta_start=scale * 0.0001,
-            beta_end=scale * 0.02,
+            beta_start=beta_start,
+            beta_end=beta_end,
             num_diffusion_timesteps=num_diffusion_timesteps,
         )
     elif schedule_name == "squaredcos_cap_v2":
